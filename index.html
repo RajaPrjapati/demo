@@ -1,135 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Society</title>
-    <link rel="stylesheet" href="demo/style.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <style>
-        *{
-    margin: 0;
-    padding: 0;
-}
-
-body{
-/*     background-color: #91F5AD; */
-     background-image: url(/demo/image3.avif);
-}
-
-header{
-    background-color: #4CFF94;
-    padding: 5px 20px;
-    display: flex;
-    align-items: center;
-}
-
-.logo{
-    flex: 1;
-}
- 
-.logo a{
-    display: flex;
-    align-items: center;
-}
-
-header a{
-   text-decoration: none;
-   font-size: 20px;
-   color: white;
-   font-weight: 200px;
-}
-
-header a:hover{
-    font-size: 25px;
-    color: red;     
- }
-
-
-.logo-img{
-    width: 70px;
-}
-
-.menu{
-    display: flex;
-    align-items: center;
-    list-style: none;
-}
-
-.menu li{
-    padding: 15px 20px;
-    font-family: 16px;
-}
-
-.toggle{
-    font-size: 30px;
-    display: none;
-}
-
-@media screen and (max-width: 600px){
-    header{
-        display: block;
-        position: relative;
-        padding: 15px 20px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif;}
+    body {
+      background: #f8f8f8;
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh;
     }
-
-    .menu{
-        margin: 15px;
-        display: none;
+    .login-container {
+      background: #fff;
+      width: 90%; max-width: 380px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
     }
-
-    .menu.active, .toggle{
-        display: block;
+    .logo {display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;}
+    .logo img {width: 40px;}
+    .logo h2 {color: #d6336c; font-size: 22px;}
+    .input-group {position: relative; margin: 15px 0;}
+    .input-group input {
+      width: 100%; padding: 12px 40px 12px 15px;
+      border-radius: 8px; border: 1px solid #ccc; font-size: 14px; outline: none;
     }
-
-    .toggle{
-        position: absolute;
-        top: 35px;
-        right: 20px;
+    .input-group i {position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888; cursor: pointer;}
+    .btn {
+      width: 100%; padding: 12px; border: none; border-radius: 8px;
+      background: #d6336c; color: #fff; font-size: 16px; cursor: pointer;
+      margin-top: 10px; transition: 0.3s;
     }
-
-    h1{
-        width: 100px;
-        margin-left: 80px;
-        margin-top: -40px; 
-        color:white;
-    }
-
-    footer{
-        width: 100%;
-        height: 20px;
-        background-color: black;
-        margin-top: 200px;
-    }
-    </style>
+    .btn:hover {background: #b82b5c;}
+    .footer {margin-top: 20px; font-size: 9px; color: #555;}
+  </style>
 </head>
 <body>
-    <header>
-           <div class="logo"> 
-            <img src="/demo/logo.png" alt="logo" class="logo-img"></div>
-            <h1>Society</h1>
-           <div class="toggle">
-            <a href="#"><ion-icon name="menu-outline"></ion-icon> </a>
-           </div>
-          <ul class="menu">
-                <li><a href="/demo/MemberDetails.html">Member Details</a></li>
-                <li><a href="/demo/Month2024.html">Monthly Installment 2024</a></li>
-                <li><a href="/demo/Month2024.html">Monthly Installment 2025</a></li>
-          </ul>
-    </header>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(function(){
-            $(".toggle").on("click", function(){
-               if($(".menu").hasClass("active")){
-                $(".menu").removeClass("active");
-                $(this).find("a").html("<ion-icon name='menu-outline'></ion-icon>");
-               } else{
-                $(".menu").addClass("active");
-                $(this).find("a").html("<ion-icon name='close-outline'></ion-icon>");
-               }
-            })
-        });      
-    </script>
+
+  <div class="login-container">
+    <div class="logo">
+      <img src="logo-img.png">
+      <h2>Committee Login</h2>
+    </div>
+
+    <form onsubmit="return validateLogin(event)">
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Enter Username" required>
+        <i class="fa fa-user"></i>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Enter Password" required>
+        <i class="fa fa-eye" id="togglePassword"></i>
+      </div>
+      <button class="btn" type="submit">Login</button>
+    </form>
+    
+    <div class="footer">
+      <p>ID your first name lowercase & Password same@123</p>
+    </div>
+  </div>
+
+  <script>
+    // Show/Hide Password
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", function () {
+      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+      this.classList.toggle("fa-eye");
+      this.classList.toggle("fa-eye-slash");
+    });
+
+    // Validate Login
+    function validateLogin(event) {
+      event.preventDefault();
+
+      let username = document.getElementById("username").value.trim().toLowerCase();
+      let password = document.getElementById("password").value.trim();
+
+      const users = {
+        "anuj": "anuj@123",
+        "aasani": "aasani@123",
+        "raj": "raj@123",
+        "vijay": "vijay@123",
+        "shiv": "shiv@123",
+        "sarita": "sarita@123",
+        "naval": "naval@123",
+        "surendra": "surendra@123",
+        "mukesh": "mukesh@123",
+        "tileshar": "tileshar@123",
+        "prabhu": "prabhu@123",
+        "ajay": "ajay@123",
+        "subham": "subham@123",
+        "sudhir": "sudhir@123",
+        "mahaveer": "mahaveer@123",
+        "ravi": "ravi@123",
+        "roshan": "roshan@123",
+        "sonu": "sonu@123",
+        "raja": "raja@123",
+        "annu": "annu@123",
+        "kittu": "kittu@123",
+        "muskan": "muskan@123",
+        "aniket": "aniket@123",
+        "sweta": "sweta@123",
+        "bharat": "bharat@123"
+      };
+
+      if (users[username] && users[username] === password) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", username);
+        window.location.href = "index.html";
+      } else {
+        alert("Invalid Username or Password!");
+      }
+    }
+
+    // Prevent back after logout
+    if (localStorage.getItem("loggedIn") !== "true") {
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+        history.go(1);
+      };
+    }
+  </script>
+
 </body>
 </html>
